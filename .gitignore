@@ -45,3 +45,8 @@ storybook-static
 
 # claude
 .claude/plans
+
+# agents / codex
+.agents/
+.codex/
+AGENTS.md

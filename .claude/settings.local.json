@@ -23,5 +23,11 @@
     "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
   },
   "plansDirectory": ".claude/plans/",
-  "enableAllProjectMcpServers": true
+  "enableAllProjectMcpServers": true,
+  "teammateMode": "in-process",
+  "outputStyle": "Learning",
+  "attribution": {
+    "commit": "",
+    "pr": ""
+  }
 }
