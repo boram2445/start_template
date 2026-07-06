@@ -1,13 +1,15 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
+@import "pretendard/dist/web/variable/pretendardvariable-dynamic-subset.css";
+@import "./design-tokens.css";
 
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+  --font-sans: var(--ds-font-sans);
   --font-mono: var(--font-geist-mono);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
@@ -38,82 +40,93 @@
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
-  --radius-2xl: calc(var(--radius) + 8px);
-  --radius-3xl: calc(var(--radius) + 12px);
-  --radius-4xl: calc(var(--radius) + 16px);
+
+  /* --- Design Kit 색 유틸 (docs/design.md) --- */
+  --color-brand: var(--ds-brand);
+  --color-brand-weak: var(--ds-bg-brand-weak);
+  --color-brand-weak-strong: var(--ds-bg-brand-weak-strong);
+  --color-fg-brand: var(--ds-fg-brand);
+  --color-fg-secondary: var(--ds-fg-secondary);
+  --color-fg-tertiary: var(--ds-fg-tertiary);
+  --color-fg-disabled: var(--ds-fg-disabled);
+  --color-line: var(--ds-line-default);
+  --color-line-strong: var(--ds-line-strong);
+  --color-success: var(--ds-success);
+  --color-warning: var(--ds-amber-500);
+  --color-info: var(--ds-blue-500);
+  --color-accent-1: var(--ds-accent-1);
+  --color-accent-2: var(--ds-accent-2);
+  --color-accent-3: var(--ds-accent-3);
+  --color-accent-4: var(--ds-accent-4);
+  --color-accent-5: var(--ds-accent-5);
+  --color-accent-6: var(--ds-accent-6);
+  --color-accent-1-fg: var(--ds-accent-yellow-fg);
+  --color-accent-2-fg: var(--ds-accent-mint-fg);
+  --color-accent-3-fg: var(--ds-accent-coral-fg);
+  --color-accent-4-fg: var(--ds-accent-lavender-fg);
+  --color-accent-5-fg: var(--ds-accent-sky-fg);
+  --color-accent-6-fg: var(--ds-accent-peach-fg);
+
+  /* --- Radius ramp — 킷 값으로 재정의 (sm 8 / md 14 / lg 16 / xl 20 / 2xl 24) --- */
+  --radius-sm: var(--ds-radius-sm);
+  --radius-md: var(--ds-radius-md);
+  --radius-lg: var(--ds-radius-lg);
+  --radius-xl: var(--ds-radius-xl);
+  --radius-2xl: var(--ds-radius-2xl);
+  --radius-3xl: 1.75rem;
+  --radius-4xl: 2rem;
+  --radius-tile: var(--ds-radius-tile);
+
+  /* --- Elevation (미세 — 헤어라인 우선) --- */
+  --shadow-sm: var(--ds-shadow-sm);
+  --shadow-tip: var(--ds-shadow-tip);
+  --shadow-sheet: var(--ds-shadow-sheet);
+
+  /* --- Motion --- */
+  --ease-ds: var(--ds-ease);
 }
 
+/* shadcn semantic 변수를 Design Kit semantic 토큰에 리매핑.
+   다크 모드 값은 design-tokens.css의 .dark 블록에서 ds 토큰이
+   스스로 재매핑되므로 여기서는 한 번만 연결한다. */
 :root {
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  --radius: var(--ds-radius-md);
+  --background: var(--ds-bg-elevated);
+  --foreground: var(--ds-fg-default);
+  --card: var(--ds-bg-elevated);
+  --card-foreground: var(--ds-fg-default);
+  --popover: var(--ds-bg-elevated);
+  --popover-foreground: var(--ds-fg-default);
+  --primary: var(--ds-bg-brand);
+  --primary-foreground: var(--ds-fg-on-brand);
+  --secondary: var(--ds-btn-secondary-bg);
+  --secondary-foreground: var(--ds-btn-secondary-fg);
+  --muted: var(--ds-bg-neutral);
+  --muted-foreground: var(--ds-fg-secondary);
+  --accent: var(--ds-bg-neutral);
+  --accent-foreground: var(--ds-fg-default);
+  --destructive: var(--ds-red-500);
+  --border: var(--ds-line-default);
+  --input: var(--ds-line-default);
+  --ring: var(--ds-line-brand);
+  --chart-1: var(--ds-viz-green);
+  --chart-2: var(--ds-viz-blue);
+  --chart-3: var(--ds-viz-amber);
+  --chart-4: var(--ds-viz-coral);
+  --chart-5: var(--ds-viz-empty);
+  --sidebar: var(--ds-bg-elevated);
+  --sidebar-foreground: var(--ds-fg-default);
+  --sidebar-primary: var(--ds-bg-brand);
+  --sidebar-primary-foreground: var(--ds-fg-on-brand);
+  --sidebar-accent: var(--ds-bg-neutral);
+  --sidebar-accent-foreground: var(--ds-fg-default);
+  --sidebar-border: var(--ds-line-default);
+  --sidebar-ring: var(--ds-line-brand);
 }
 
+/* ds semantic을 경유하지 않는 값만 다크에서 보정 */
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
   --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
 }
 
 @layer base {
@@ -121,6 +134,68 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply text-foreground;
+    /* 페이지 배경은 회색 워시, 카드 표면(bg-background)은 흰색 유지 */
+    background-color: var(--ds-bg-default);
+  }
+}
+
+/* 인터랙티브 표면 press 피드백: scale 축소 + 무채색 tint (docs/design.md Motion) */
+@utility press-scale {
+  position: relative;
+  isolation: isolate;
+  transition: transform var(--ds-dur-fast) var(--ds-ease);
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    transition: background-color var(--ds-dur-fast) var(--ds-ease);
+  }
+
+  @media (hover: hover) {
+    &:hover::after {
+      background-color: var(--ds-overlay-hover);
+    }
+  }
+
+  &:active {
+    transform: scale(var(--ds-scale-press));
+  }
+
+  &:active::after {
+    background-color: var(--ds-overlay-press);
+  }
+}
+
+/* 텍스트 인접 행(chip/checkbox/radio)용 — 축소 폭이 얕다 */
+@utility press-scale-row {
+  position: relative;
+  isolation: isolate;
+  transition: transform var(--ds-dur-fast) var(--ds-ease);
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    transition: background-color var(--ds-dur-fast) var(--ds-ease);
+  }
+
+  @media (hover: hover) {
+    &:hover::after {
+      background-color: var(--ds-overlay-hover);
+    }
+  }
+
+  &:active {
+    transform: scale(var(--ds-scale-press-row));
+  }
+
+  &:active::after {
+    background-color: var(--ds-overlay-press);
   }
 }

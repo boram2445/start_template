@@ -1,0 +1,296 @@
+/* ============================================================
+   Design Kit — Runtime Tokens
+   원본 스펙: docs/design.md · docs/design-tokens-kit.md
+   3-tier: Primitive → Semantic → Component
+   다크 모드는 원본의 prefers-color-scheme 대신 .dark 클래스
+   (next-themes attribute="class")로 변환했다.
+   ============================================================ */
+
+:root {
+  /* ==========================================================
+     TIER 1 — PRIMITIVE (원시 팔레트, 직접 호출 금지)
+     ========================================================== */
+
+  /* --- Brand (green) --- */
+  --ds-green-50: oklch(0.975 0.02 150); /* #eefaf1 */
+  --ds-green-100: oklch(0.94 0.055 145); /* #d5f4de */
+  --ds-green-200: oklch(0.93 0.08 128); /* #d6f0b8 - tint fill */
+  --ds-green-300: oklch(0.87 0.13 148); /* #8fe6a8 */
+  --ds-green-400: oklch(0.82 0.165 150); /* #4fdd7f */
+  --ds-green-500: oklch(0.78 0.18 152); /* #24d16a - 브랜드 대표색 */
+  --ds-green-600: oklch(0.66 0.16 155); /* #17a656 - CTA(흰 텍스트 AA) */
+  --ds-green-700: oklch(0.56 0.13 158); /* #12864a - pressed */
+  --ds-green-800: oklch(0.52 0.1 160); /* #1f7a55 - 강조 텍스트 */
+  --ds-green-900: oklch(0.42 0.08 162); /* #185c40 */
+
+  /* --- Neutral (cool-tinted grey) --- */
+  --ds-gray-0: oklch(1 0 0); /* #ffffff */
+  --ds-gray-50: oklch(0.985 0.002 250); /* #fafbfb */
+  --ds-gray-100: oklch(0.968 0.003 250); /* #f4f5f6 - 페이지 배경 */
+  --ds-gray-200: oklch(0.928 0.004 250); /* #e5e7e9 - divider */
+  --ds-gray-300: oklch(0.872 0.005 250); /* #d1d4d7 - border */
+  --ds-gray-400: oklch(0.76 0.007 250); /* #a8adb2 - disabled fg */
+  --ds-gray-500: oklch(0.64 0.009 250); /* #7f858b - secondary text */
+  --ds-gray-600: oklch(0.52 0.01 250); /* #5c626a */
+  --ds-gray-700: oklch(0.41 0.01 250); /* #43484f */
+  --ds-gray-800: oklch(0.32 0.009 250); /* #2f333a - chip active */
+  --ds-gray-900: oklch(0.24 0.008 250); /* #1f2329 - primary text */
+
+  /* --- Accent (콘텐츠 분류 전용, 액션 색 아님) --- */
+  --ds-accent-yellow: oklch(0.94 0.08 95); /* #fbf0c9 */
+  --ds-accent-mint: oklch(0.94 0.05 160); /* #d9f2e4 */
+  --ds-accent-coral: oklch(0.92 0.05 20); /* #fcdcd6 */
+  --ds-accent-lavender: oklch(0.92 0.04 290); /* #e6def3 */
+  --ds-accent-sky: oklch(0.93 0.04 240); /* #dbe8f7 */
+  --ds-accent-peach: oklch(0.93 0.05 60); /* #fbe6cf */
+
+  /* 파스텔 배경 위 "동계열 진한 텍스트" — 킷에 값이 없어 동일 hue로 파생(대비 검증 필요) */
+  --ds-accent-yellow-fg: oklch(0.5 0.1 95);
+  --ds-accent-mint-fg: oklch(0.48 0.09 160);
+  --ds-accent-coral-fg: oklch(0.5 0.12 20);
+  --ds-accent-lavender-fg: oklch(0.48 0.08 290);
+  --ds-accent-sky-fg: oklch(0.48 0.09 240);
+  --ds-accent-peach-fg: oklch(0.5 0.1 60);
+
+  /* --- Data viz --- */
+  --ds-viz-blue: oklch(0.72 0.11 260);
+  --ds-viz-amber: oklch(0.85 0.12 85);
+  --ds-viz-coral: oklch(0.72 0.14 25);
+  --ds-viz-green: oklch(0.8 0.14 150);
+  --ds-viz-empty: oklch(0.94 0.004 250);
+
+  /* --- Functional (status) --- */
+  --ds-red-500: oklch(0.628 0.218 22); /* #e23b3b - error/danger */
+  --ds-success: oklch(0.585 0.13 160); /* #1e9e6a - success */
+  --ds-amber-500: oklch(0.76 0.15 75); /* #e89923 - warning */
+  --ds-blue-500: oklch(0.606 0.17 250); /* #3d7ee0 - info */
+
+  /* --- Static alpha --- */
+  --ds-overlay-scrim: oklch(0.24 0.008 250 / 0.55); /* modal/sheet dim */
+  --ds-overlay-press: oklch(0.24 0.008 250 / 0.08); /* pressed tint */
+  --ds-overlay-hover: oklch(0.24 0.008 250 / 0.04); /* hover tint (웹) */
+
+  /* ==========================================================
+     TIER 2 — SEMANTIC (역할 토큰, 제품에서 이걸 호출)
+     ========================================================== */
+
+  /* --- Background / surface --- */
+  --ds-bg-default: var(--ds-gray-100); /* 페이지/앱 배경 */
+  --ds-bg-elevated: var(--ds-gray-0); /* 카드 표면 */
+  --ds-brand: var(--ds-green-500); /* 브랜드 대표색(로고·강조·비-텍스트 표면) */
+  --ds-bg-brand: var(--ds-green-600); /* CTA 배경(흰 텍스트 전제) */
+  --ds-bg-brand-hover: var(--ds-green-500); /* 웹 hover */
+  --ds-bg-brand-press: var(--ds-green-700); /* pressed */
+  --ds-bg-brand-weak: var(--ds-green-50); /* 선택 강조 tint 배경 */
+  --ds-bg-brand-weak-strong: var(--ds-green-100);
+  --ds-bg-neutral: var(--ds-gray-100); /* 보조 버튼 배경 */
+  --ds-bg-neutral-strong: var(--ds-gray-800); /* 활성 chip */
+  --ds-bg-danger: var(--ds-red-500);
+  --ds-bg-success: var(--ds-success);
+
+  /* --- Foreground (text / icon) --- */
+  --ds-fg-default: var(--ds-gray-900); /* 본문 */
+  --ds-fg-secondary: var(--ds-gray-500); /* 보조 */
+  --ds-fg-tertiary: var(--ds-gray-400); /* helper */
+  --ds-fg-disabled: var(--ds-gray-400);
+  --ds-fg-placeholder: var(--ds-gray-400);
+  --ds-fg-brand: var(--ds-green-800); /* 강조 텍스트/타이틀(흰 배경 위) */
+  --ds-fg-on-brand: var(--ds-gray-0); /* 브랜드 배경 위 텍스트 = 흰색 */
+  --ds-fg-on-neutral: var(--ds-gray-0); /* 차콜 배경 위 텍스트 */
+  --ds-fg-danger: var(--ds-red-500);
+
+  /* --- Border / line --- */
+  --ds-line-default: var(--ds-gray-200); /* divider */
+  --ds-line-strong: var(--ds-gray-300); /* input border */
+  --ds-line-brand: var(--ds-green-500); /* focus/selected border */
+
+  /* --- State --- */
+  --ds-state-hover: var(--ds-overlay-hover);
+  --ds-state-press: var(--ds-overlay-press);
+  --ds-state-disabled-opacity: 0.4;
+
+  /* --- Accent (콘텐츠 분류) --- */
+  --ds-accent-1: var(--ds-accent-yellow);
+  --ds-accent-2: var(--ds-accent-mint);
+  --ds-accent-3: var(--ds-accent-coral);
+  --ds-accent-4: var(--ds-accent-lavender);
+  --ds-accent-5: var(--ds-accent-sky);
+  --ds-accent-6: var(--ds-accent-peach);
+
+  /* ==========================================================
+     TYPOGRAPHY
+     ========================================================== */
+  --ds-font-sans: "Pretendard Variable", Pretendard, -apple-system,
+    BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+
+  --ds-fw-regular: 400;
+  --ds-fw-medium: 500;
+  --ds-fw-semibold: 600;
+  --ds-fw-bold: 700;
+
+  /* size / line-height (rem, 16px 베이스) */
+  --ds-text-display: 2.25rem; /* 36 */
+  --ds-lh-display: 1.25;
+  --ds-text-h1: 1.625rem; /* 26 */
+  --ds-lh-h1: 1.3;
+  --ds-text-h2: 1.5rem; /* 24 */
+  --ds-lh-h2: 1.35;
+  --ds-text-h3: 1.375rem; /* 22 */
+  --ds-lh-h3: 1.35;
+  --ds-text-h4: 1.25rem; /* 20 */
+  --ds-lh-h4: 1.4;
+  --ds-text-title-1: 1.125rem; /* 18 / 600 */
+  --ds-lh-title-1: 1.45;
+  --ds-text-title-2: 1rem; /* 16 / 600 */
+  --ds-lh-title-2: 1.5;
+  --ds-text-title-3: 0.875rem; /* 14 / 600 */
+  --ds-lh-title-3: 1.55;
+  --ds-text-body-1: 1.125rem; /* 18 / 400 */
+  --ds-lh-body-1: 1.45;
+  --ds-text-body-2: 1rem; /* 16 / 400 - 기본 본문 */
+  --ds-lh-body-2: 1.5;
+  --ds-text-body-3: 0.875rem; /* 14 / 400 */
+  --ds-lh-body-3: 1.55;
+  --ds-text-caption: 0.75rem; /* 12 */
+  --ds-lh-caption: 1.5;
+
+  /* ==========================================================
+     SPACING (4px 베이스)
+     ========================================================== */
+  --ds-space-1: 0.25rem; /* 4 */
+  --ds-space-2: 0.5rem; /* 8 */
+  --ds-space-3: 0.75rem; /* 12 */
+  --ds-space-4: 1rem; /* 16 */
+  --ds-space-5: 1.25rem; /* 20 */
+  --ds-space-6: 1.5rem; /* 24 */
+  --ds-space-8: 2rem; /* 32 */
+  --ds-space-10: 2.5rem; /* 40 */
+
+  --ds-gutter-screen: var(--ds-space-4); /* 화면 좌우 아우터 */
+  --ds-gutter-card: var(--ds-space-4); /* 카드 내부 */
+  --ds-gap-section: var(--ds-space-8); /* 섹션 간 */
+
+  /* ==========================================================
+     RADIUS
+     ========================================================== */
+  --ds-radius-sm: 0.5rem; /* 8 */
+  --ds-radius-md: 0.875rem; /* 14 - input */
+  --ds-radius-lg: 1rem; /* 16 - card */
+  --ds-radius-xl: 1.25rem; /* 20 */
+  --ds-radius-2xl: 1.5rem; /* 24 - sheet */
+  --ds-radius-tile: 1.375rem; /* 22 - accent tile */
+  --ds-radius-full: 9999px; /* pill / circle */
+
+  /* ==========================================================
+     ELEVATION (미세 — 표면 분리는 헤어라인 우선)
+     ========================================================== */
+  --ds-shadow-sm: 0 1px 2px oklch(0.24 0.008 250 / 0.04);
+  --ds-shadow-tip: 0 2px 4px oklch(0 0 0 / 0.12);
+  --ds-shadow-sheet: 0 0 20px oklch(0 0 0 / 0.25);
+
+  /* ==========================================================
+     MOTION
+     ========================================================== */
+  --ds-ease: cubic-bezier(0.42, 0, 0.58, 1);
+  --ds-dur-fast: 100ms;
+  --ds-dur-base: 150ms;
+  --ds-scale-press: 0.92; /* 인터랙티브 표면 */
+  --ds-scale-press-row: 0.96; /* 텍스트 인접 행(chip/checkbox/radio) */
+
+  /* ==========================================================
+     TIER 3 — COMPONENT (컴포넌트 전용 alias)
+     ========================================================== */
+
+  /* Button — Primary */
+  --ds-btn-primary-bg: var(--ds-bg-brand);
+  --ds-btn-primary-bg-hover: var(--ds-bg-brand-hover);
+  --ds-btn-primary-bg-press: var(--ds-bg-brand-press);
+  --ds-btn-primary-fg: var(--ds-fg-on-brand);
+  --ds-btn-primary-disabled-bg: var(--ds-gray-100);
+  --ds-btn-primary-disabled-fg: var(--ds-fg-disabled);
+  /* height: large 56 / medium 40 / small 34 / xSmall 32 */
+  /* radius: large 14 / medium 12 / small 10 / xSmall 8 */
+
+  /* Button — Secondary / Tertiary */
+  --ds-btn-secondary-bg: var(--ds-green-100);
+  --ds-btn-secondary-fg: var(--ds-green-700);
+  --ds-btn-tertiary-bg: var(--ds-gray-100);
+  --ds-btn-tertiary-fg: var(--ds-fg-default);
+
+  /* Chip */
+  --ds-chip-radius: var(--ds-radius-full);
+  --ds-chip-selected-bg: var(--ds-green-50);
+  --ds-chip-selected-border: var(--ds-brand);
+  --ds-chip-selected-fg: var(--ds-green-800);
+  --ds-chip-bg: var(--ds-gray-0);
+  --ds-chip-border: var(--ds-line-default);
+  --ds-chip-fg: var(--ds-fg-secondary);
+
+  /* Card */
+  --ds-card-bg: var(--ds-bg-elevated);
+  --ds-card-radius: var(--ds-radius-lg);
+  --ds-card-padding: var(--ds-gutter-card);
+  --ds-card-border: var(--ds-line-default);
+
+  /* Input / Field */
+  --ds-field-radius: var(--ds-radius-md);
+  --ds-field-bg: var(--ds-gray-100);
+  --ds-field-border: var(--ds-line-default);
+  --ds-field-border-focus: var(--ds-line-brand);
+  --ds-field-border-error: var(--ds-fg-danger);
+
+  /* Toggle / Switch */
+  --ds-switch-on-track: var(--ds-brand);
+  --ds-switch-off-track: var(--ds-gray-300);
+  --ds-switch-knob: var(--ds-gray-0);
+
+  /* Bottom Sheet / Modal */
+  --ds-sheet-bg: var(--ds-bg-elevated);
+  --ds-sheet-radius: var(--ds-radius-2xl);
+  --ds-sheet-scrim: var(--ds-overlay-scrim);
+  --ds-sheet-shadow: var(--ds-shadow-sheet);
+
+  /* Selection (checkbox/radio/select item) */
+  --ds-select-checked-bg: var(--ds-bg-brand);
+  --ds-select-checked-fg: var(--ds-fg-on-brand);
+  --ds-select-unchecked-border: var(--ds-line-strong);
+  --ds-select-item-bg: var(--ds-green-100);
+  --ds-select-item-fg: var(--ds-green-800);
+  --ds-select-item-border: var(--ds-bg-brand);
+
+  /* Tag (비인터랙티브, 파스텔 분류) */
+  --ds-tag-radius: var(--ds-radius-sm);
+  /* 배경은 --ds-accent-* 중 택1, 텍스트는 동계열 진한 색 */
+
+  /* Progress */
+  --ds-progress-track: var(--ds-viz-empty);
+  --ds-progress-fill: var(--ds-brand);
+}
+
+/* ============================================================
+   DARK MODE (semantic만 재매핑 — 킷 권장값, 대비 검증 필요)
+   ============================================================ */
+.dark {
+  --ds-bg-default: oklch(0.2 0.006 250);
+  --ds-bg-elevated: oklch(0.255 0.008 250);
+  --ds-brand: var(--ds-green-400);
+  --ds-bg-brand: var(--ds-green-500);
+  --ds-bg-brand-hover: var(--ds-green-400);
+  --ds-bg-brand-press: var(--ds-green-600);
+  --ds-bg-brand-weak: oklch(0.3 0.05 150);
+  --ds-bg-neutral: oklch(0.3 0.008 250);
+  --ds-bg-neutral-strong: var(--ds-gray-100);
+
+  --ds-fg-default: var(--ds-gray-100);
+  --ds-fg-secondary: var(--ds-gray-400);
+  --ds-fg-brand: var(--ds-green-300);
+  --ds-fg-on-neutral: var(--ds-gray-900);
+
+  --ds-line-default: oklch(1 0 0 / 0.1);
+  --ds-line-strong: oklch(1 0 0 / 0.16);
+  --ds-line-brand: var(--ds-green-400);
+
+  --ds-select-item-bg: oklch(0.3 0.05 150);
+  --ds-select-item-fg: var(--ds-green-300);
+  --ds-chip-selected-fg: var(--ds-green-300);
+}
