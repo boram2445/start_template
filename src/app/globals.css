@@ -84,6 +84,18 @@
 
   /* --- Motion --- */
   --ease-ds: var(--ds-ease);
+
+  /* --- Skeleton 웨이브 시머 --- */
+  --animate-shimmer: shimmer 1.8s var(--ds-ease) infinite;
+
+  @keyframes shimmer {
+    from {
+      background-position: 200% 0;
+    }
+    to {
+      background-position: -200% 0;
+    }
+  }
 }
 
 /* shadcn semantic 변수를 Design Kit semantic 토큰에 리매핑.
