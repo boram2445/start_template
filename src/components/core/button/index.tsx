@@ -21,11 +21,12 @@ const buttonVariants = cva(
         primary: 'bg-primary text-primary-foreground hover:bg-[var(--ds-bg-brand-hover)]',
         secondary: 'bg-secondary text-secondary-foreground',
         tertiary: 'bg-muted text-foreground',
-        outlined: 'border border-line bg-card text-brand',
+        outlined: 'border border-line bg-card text-brand hover:bg-brand-weak',
       },
-      // 사이즈에 따라 radius가 함께 스케일한다 (56/40/34/32 · 14/12/10/8)
+      // 사이즈에 따라 radius가 함께 스케일한다 (56/48/40/34/32 · 14/12/12/10/8)
       size: {
-        large: 'h-14 rounded-md px-5 text-base font-semibold',
+        xlarge: 'h-14 rounded-md px-5 text-base font-semibold',
+        large: 'h-12 rounded-[12px] px-4 text-base font-semibold',
         medium: 'h-10 rounded-[12px] px-4 text-sm font-semibold',
         small: 'h-[34px] rounded-[10px] px-3.5 text-sm',
         xsmall: 'h-8 rounded-sm px-3 text-xs',

@@ -10,7 +10,7 @@ const meta: Meta<typeof Button> = {
     docs: {
       description: {
         component:
-          '디자인 킷의 주 행동 버튼. 4개 variant(primary/secondary/tertiary/outlined)와 4개 사이즈(large/medium/small/xsmall)를 제공하며, 사이즈에 따라 radius가 14/12/10/8로 함께 스케일한다. disabled는 불투명도 대신 색 교체, 화면당 primary는 하나만 둔다.',
+          '디자인 킷의 주 행동 버튼. 4개 variant(primary/secondary/tertiary/outlined)와 5개 사이즈(xlarge/large/medium/small/xsmall, 56/48/40/34/32)를 제공하며, 사이즈에 따라 radius가 14/12/12/10/8로 함께 스케일한다. disabled는 불투명도 대신 색 교체, 화면당 primary는 하나만 둔다.',
       },
     },
   },
@@ -23,7 +23,7 @@ const meta: Meta<typeof Button> = {
     },
     size: {
       control: 'select',
-      options: ['large', 'medium', 'small', 'xsmall'],
+      options: ['xlarge', 'large', 'medium', 'small', 'xsmall'],
       description: '버튼 크기 (radius가 함께 스케일)',
     },
     loading: {
@@ -59,6 +59,9 @@ export const Default: Story = {
 export const Primary: Story = {
   render: () => (
     <div className="flex items-center gap-3">
+      <Button variant="primary" size="xlarge">
+        저장하기
+      </Button>
       <Button variant="primary" size="large">
         저장하기
       </Button>
@@ -78,6 +81,9 @@ export const Primary: Story = {
 export const Secondary: Story = {
   render: () => (
     <div className="flex items-center gap-3">
+      <Button variant="secondary" size="xlarge">
+        다음에
+      </Button>
       <Button variant="secondary" size="large">
         다음에
       </Button>
@@ -97,6 +103,9 @@ export const Secondary: Story = {
 export const Tertiary: Story = {
   render: () => (
     <div className="flex items-center gap-3">
+      <Button variant="tertiary" size="xlarge">
+        취소
+      </Button>
       <Button variant="tertiary" size="large">
         취소
       </Button>
@@ -116,6 +125,9 @@ export const Tertiary: Story = {
 export const Outlined: Story = {
   render: () => (
     <div className="flex items-center gap-3">
+      <Button variant="outlined" size="xlarge">
+        더보기
+      </Button>
       <Button variant="outlined" size="large">
         더보기
       </Button>
@@ -169,6 +181,9 @@ export const AllVariants: Story = {
       {(['primary', 'secondary', 'tertiary', 'outlined'] as const).map((variant) => (
         <div key={variant} className="flex items-center gap-3">
           <span className="w-24 text-sm text-fg-secondary">{variant}</span>
+          <Button variant={variant} size="xlarge">
+            저장하기
+          </Button>
           <Button variant={variant} size="large">
             저장하기
           </Button>

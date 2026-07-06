@@ -56,12 +56,12 @@ export const Default: Story = {
         </BottomSheetHeader>
         <BottomSheetFooter>
           <BottomSheetClose asChild>
-            <Button variant="tertiary" size="large">
+            <Button variant="tertiary" size="xlarge">
               다음에
             </Button>
           </BottomSheetClose>
           <BottomSheetClose asChild>
-            <Button size="large">삭제하기</Button>
+            <Button size="xlarge">삭제하기</Button>
           </BottomSheetClose>
         </BottomSheetFooter>
       </BottomSheetContent>
@@ -106,7 +106,7 @@ export const WithBody: Story = {
         </BottomSheetBody>
         <BottomSheetFooter>
           <BottomSheetClose asChild>
-            <Button size="large">확인</Button>
+            <Button size="xlarge">확인</Button>
           </BottomSheetClose>
         </BottomSheetFooter>
       </BottomSheetContent>

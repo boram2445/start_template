@@ -150,6 +150,11 @@
     /* 페이지 배경은 회색 워시, 카드 표면(bg-background)은 흰색 유지 */
     background-color: var(--ds-bg-default);
   }
+  /* Tailwind v4 preflight는 버튼 커서를 리셋하지 않는다 — 데스크톱 웹 표준 커서 */
+  button:not(:disabled),
+  [role='button']:not(:disabled) {
+    cursor: pointer;
+  }
 }
 
 /* 인터랙티브 표면 press 피드백: scale 축소 + 무채색 tint (docs/design.md Motion) */
