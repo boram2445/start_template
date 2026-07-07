@@ -2,7 +2,7 @@ import { expect, userEvent, within } from 'storybook/test';
 
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 
-import { Checkbox } from '@/components/core/checkbox/index';
+import { Checkbox, CheckboxGroup } from '@/components/core/checkbox/index';
 
 const meta: Meta<typeof Checkbox> = {
   title: 'UI/Checkbox',
@@ -12,7 +12,7 @@ const meta: Meta<typeof Checkbox> = {
     docs: {
       description: {
         component:
-          '20×20 원형 컨트롤의 체크박스. 체크 시 브랜드 배경 + 흰 체크, disabled는 불투명도 대신 gray-300으로 색 강등된다. label을 지정하면 높이 48 행 레이아웃이 되고 행 press 피드백이 붙는다.',
+          '체크박스 — label을 지정하면 높이 48 행 레이아웃이 되고 행 press 피드백이 붙는다. label 없이 쓰면 20px 박스는 그대로지만 보이지 않는 패딩으로 클릭 영역이 44px까지 넓어진다. RadioGroup과 대응하는 CheckboxGroup(boxed)도 함께 제공된다.\n\n20×20 원형 컨트롤. 체크 시 브랜드 배경 + 흰 체크, disabled는 불투명도 대신 gray-300으로 색 강등된다.',
       },
     },
   },
@@ -68,6 +68,27 @@ export const Disabled: Story = {
       <Checkbox label="비활성 (해제)" disabled />
       <Checkbox label="비활성 (체크)" disabled defaultChecked />
     </div>
+  ),
+};
+
+export const Bare: Story = {
+  name: '라벨 없음 (44px 히트박스)',
+  render: () => (
+    <div className="flex items-center gap-4">
+      <Checkbox aria-label="전체 선택" />
+      <Checkbox aria-label="전체 선택 (체크됨)" defaultChecked />
+    </div>
+  ),
+};
+
+export const Grouped: Story = {
+  name: 'CheckboxGroup (boxed)',
+  render: () => (
+    <CheckboxGroup boxed className="w-72 p-1">
+      <Checkbox label="아침 러닝 30분" defaultChecked />
+      <Checkbox label="물 2L 마시기" />
+      <Checkbox label="스트레칭 10분" />
+    </CheckboxGroup>
   ),
 };
 

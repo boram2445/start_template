@@ -16,7 +16,7 @@ function ThemeWrapper({ theme, children }: { theme: string; children: React.Reac
   }, [theme]);
 
   return (
-    <div className="bg-[var(--ds-bg-default)] p-6 font-sans text-foreground">{children}</div>
+    <div className="bg-[var(--ds-bg-elevated)] p-6 font-sans text-foreground">{children}</div>
   );
 }
 
@@ -46,6 +46,13 @@ const preview: Preview = {
   },
   decorators: [withTheme],
   parameters: {
+    options: {
+      // 사이드바 정렬: Foundation(토큰 문서) → UI(컴포넌트)
+      storySort: {
+        order: ['Foundation', 'UI'],
+      },
+    },
+
     controls: {
       matchers: {
         color: /(background|color)$/i,

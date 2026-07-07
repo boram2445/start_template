@@ -5,8 +5,9 @@ import { ChevronLeftIcon } from 'lucide-react';
 import { IconButton } from '@/components/core/icon-button/index';
 import { cn } from '@/lib/utils';
 
-type TopAppBarProps = React.ComponentProps<'header'> & {
-  /** 중앙 타이틀 */
+// HTML title 속성(string)과 충돌하므로 Omit 후 ReactNode로 재선언한다
+type TopAppBarProps = Omit<React.ComponentProps<'header'>, 'title'> & {
+  /** 타이틀 — 뒤로가기 버튼 오른쪽에 좌측 정렬로 놓인다 */
   title?: React.ReactNode;
   /** 지정 시 왼쪽에 뒤로가기 버튼이 붙는다 */
   onBack?: () => void;

@@ -2,11 +2,12 @@ import * as React from 'react';
 
 import { cn } from '@/lib/utils';
 
-type SelectionBoxProps = React.ComponentProps<'button'> & {
-  /** 타이틀 */
-  title: string;
+// HTML title 속성(string)과 충돌하므로 Omit 후 ReactNode로 재선언한다
+type SelectionBoxProps = Omit<React.ComponentProps<'button'>, 'title'> & {
+  /** 타이틀 — "숫자 bold + 단위 regular" 조합 등 노드 구성 허용 */
+  title: React.ReactNode;
   /** 타이틀 아래 서브텍스트 */
-  description?: string;
+  description?: React.ReactNode;
   /** 선택 상태 — aria-pressed로 노출된다 */
   selected?: boolean;
 };
@@ -28,7 +29,7 @@ function SelectionBox({
       data-slot="selection-box"
       aria-pressed={selected}
       className={cn(
-        'press-scale-row flex min-h-[82px] w-full flex-col items-start justify-center gap-0.5 rounded-md border px-4 py-3 text-left',
+        'group press-scale-row flex min-h-[82px] w-full flex-col items-start justify-center gap-0.5 rounded-md border px-4 py-3 text-left',
         'transition-colors duration-100 ease-ds outline-none',
         'focus-visible:ring-[3px] focus-visible:ring-ring/50',
         'border-line bg-card',
@@ -40,8 +41,8 @@ function SelectionBox({
     >
       <span
         className={cn(
-          'text-base font-semibold',
-          selected ? 'text-[var(--ds-select-item-fg)]' : 'text-foreground',
+          'text-base font-semibold text-foreground',
+          'group-aria-pressed:text-[var(--ds-select-item-fg)]',
           props.disabled && 'text-fg-disabled',
         )}
       >
@@ -50,8 +51,8 @@ function SelectionBox({
       {description && (
         <span
           className={cn(
-            'text-sm',
-            selected ? 'text-[var(--ds-select-item-fg)]' : 'text-fg-secondary',
+            'text-sm text-fg-secondary',
+            'group-aria-pressed:text-[var(--ds-select-item-fg)]',
             props.disabled && 'text-fg-disabled',
           )}
         >

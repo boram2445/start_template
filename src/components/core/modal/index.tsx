@@ -82,12 +82,15 @@ function ModalBody({ className, ...props }: React.ComponentProps<'div'>) {
   return <div data-slot="modal-body" className={cn('px-5 py-3', className)} {...props} />;
 }
 
-/** 푸터 버튼은 가로 분할 — BottomSheet와 동일한 규칙 */
+/** 푸터 버튼 — 모바일(BottomSheet)은 가로 분할, 데스크톱(Dialog)은 우측 정렬 고정폭 */
 function ModalFooter({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div
       data-slot="modal-footer"
-      className={cn('flex flex-row gap-2 p-5 pt-3 *:min-w-[120px] *:flex-1', className)}
+      className={cn(
+        'flex flex-row gap-2 p-5 pt-3 *:min-w-[120px] *:flex-1 md:justify-end md:*:flex-none',
+        className,
+      )}
       {...props}
     />
   );

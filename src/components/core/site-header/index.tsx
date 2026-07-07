@@ -11,6 +11,8 @@ type SiteHeaderProps = React.ComponentProps<'header'> & {
   nav?: React.ReactNode;
   /** 오른쪽 액션 슬롯 (버튼·아이콘 등) */
   actions?: React.ReactNode;
+  /** 모바일 전용 메뉴 트리거(햄버거 등) — 데스크톱(≥md)에서는 숨겨진다. 드로어·시트와 조합해 nav의 모바일 대체 진입점으로 쓴다 */
+  mobileMenu?: React.ReactNode;
 };
 
 /**
@@ -18,7 +20,7 @@ type SiteHeaderProps = React.ComponentProps<'header'> & {
  * 데스크톱 h-16 / 모바일 h-[52px]. 링크 렌더링은 슬롯에 위임하고
  * 레이아웃만 책임진다 (앱 화면 헤더는 core/top-app-bar 사용)
  */
-function SiteHeader({ className, logo, nav, actions, children, ...props }: SiteHeaderProps) {
+function SiteHeader({ className, logo, nav, actions, mobileMenu, children, ...props }: SiteHeaderProps) {
   return (
     <header
       data-slot="site-header"
@@ -34,6 +36,9 @@ function SiteHeader({ className, logo, nav, actions, children, ...props }: SiteH
       )}
       {!nav && <div className="flex-1" />}
       {actions && <div className="flex shrink-0 items-center gap-2">{actions}</div>}
+      {mobileMenu && (
+        <div className="flex shrink-0 items-center md:hidden">{mobileMenu}</div>
+      )}
       {children}
     </header>
   );

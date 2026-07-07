@@ -14,7 +14,7 @@ const meta: Meta<typeof SelectionBox> = {
     docs: {
       description: {
         component:
-          '타이틀 + 서브텍스트로 구성된 큰 선택 카드(radius 14, 높이 ~82). 선택 시 브랜드 보더 + 옅은 그린 tint 배경 + 진한 동계열 텍스트로 전환되며, 선택 상태는 aria-pressed로 노출된다.',
+          '타이틀 + 서브텍스트로 구성된 큰 선택 카드 — 선택 상태는 aria-pressed로 노출된다.\n\nradius 14, 높이 ~82. 선택 시 브랜드 보더 + 옅은 그린 tint 배경 + 진한 동계열 텍스트로 전환된다.',
       },
     },
   },
@@ -62,6 +62,14 @@ export const Selected: Story = {
     title: '제대로 해보기',
     description: '하루 30분, 주 5회 루틴',
     selected: true,
+  },
+};
+
+export const Disabled: Story = {
+  args: {
+    title: '준비 중이에요',
+    description: '다음 업데이트에서 열려요',
+    disabled: true,
   },
 };
 

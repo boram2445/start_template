@@ -30,6 +30,38 @@ const eslintConfig = defineConfig([
       'no-console': 'warn',
     },
   },
+  // core 대체물이 있는 ui/ 직접 import 차단 — ui/ 내부 상호 참조와
+  // core/ 래퍼만 예외 (docs/design-web.md "core/ ↔ ui/ 조합 규칙")
+  {
+    files: ['src/**/*.{ts,tsx}'],
+    ignores: ['src/components/ui/**', 'src/components/core/**'],
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            {
+              group: [
+                '@/components/ui/button',
+                '@/components/ui/input',
+                '@/components/ui/textarea',
+                '@/components/ui/skeleton',
+                '@/components/ui/checkbox',
+                '@/components/ui/radio-group',
+                '@/components/ui/switch',
+                '@/components/ui/tabs',
+                '@/components/ui/dialog',
+                '@/components/ui/sheet',
+                '@/components/ui/sonner',
+              ],
+              message:
+                'core 대체물이 있는 컴포넌트입니다 — @/components/core/<name>/index 를 사용하세요.',
+            },
+          ],
+        },
+      ],
+    },
+  },
   ...storybook.configs["flat/recommended"]
 ]);
 

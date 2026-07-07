@@ -12,7 +12,7 @@ const meta: Meta<typeof RadioGroup> = {
     docs: {
       description: {
         component:
-          '20×20 원형 컨트롤의 라디오 그룹. 선택 시 안쪽 dot이 브랜드 색으로 채워지고, 행(높이 48) 단위로 press 피드백이 붙는다. boxed를 켜면 그룹이 radius-sm + 회색 배경 컨테이너로 감싸진다.',
+          '단일 선택 라디오 그룹 — boxed를 켜면 그룹이 radius-sm + 회색 배경 컨테이너로 감싸진다. label은 checkbox와 동일하게 선택 사항이며, 없으면 20px 박스를 유지한 채 클릭 영역만 44px로 넓어진다.\n\n20×20 원형 컨트롤. 선택 시 안쪽 dot이 브랜드 색으로 채워지고, 행(높이 48) 단위로 press 피드백이 붙는다.',
       },
     },
   },
@@ -63,6 +63,16 @@ export const Boxed: Story = {
       <Radio value="daily" label="매일" />
       <Radio value="weekday" label="평일만" />
       <Radio value="weekend" label="주말만" />
+    </RadioGroup>
+  ),
+};
+
+export const Bare: Story = {
+  name: '라벨 없음 (44px 히트박스)',
+  render: () => (
+    <RadioGroup defaultValue="a" className="flex flex-row gap-4">
+      <Radio value="a" aria-label="옵션 A" />
+      <Radio value="b" aria-label="옵션 B" />
     </RadioGroup>
   ),
 };

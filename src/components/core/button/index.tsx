@@ -11,8 +11,9 @@ const buttonVariants = cva(
     'press-scale relative inline-flex shrink-0 items-center justify-center gap-2 whitespace-nowrap',
     'transition-colors duration-100 ease-ds outline-none',
     'focus-visible:ring-[3px] focus-visible:ring-ring/50',
-    // disabled는 불투명도 대신 색 교체 (design.md)
-    'disabled:pointer-events-none disabled:border-transparent disabled:bg-muted disabled:text-fg-disabled',
+    // disabled는 불투명도 대신 색 교체 (design.md) — loading은 disabled 속성을 같이 쓰지만
+    // variant 색을 유지해야 하므로 data-loading일 때는 색 교체에서 제외한다
+    'disabled:pointer-events-none disabled:not-data-loading:border-transparent disabled:not-data-loading:bg-muted disabled:not-data-loading:text-fg-disabled',
     "[&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
   ].join(' '),
   {
@@ -21,7 +22,7 @@ const buttonVariants = cva(
         primary: 'bg-primary text-primary-foreground hover:bg-[var(--ds-bg-brand-hover)]',
         secondary: 'bg-secondary text-secondary-foreground',
         tertiary: 'bg-muted text-foreground',
-        outlined: 'border border-line bg-card text-brand hover:bg-brand-weak',
+        outlined: 'border border-line bg-card text-primary hover:bg-brand-weak',
       },
       // 사이즈에 따라 radius가 함께 스케일한다 (56/48/40/34/32 · 14/12/12/10/8)
       size: {
@@ -39,12 +40,30 @@ const buttonVariants = cva(
   },
 );
 
+// 로딩 스피너 크기를 버튼 size에 맞춰 스케일한다 (56/48/40 → 24/20/20, 34/32 → 16)
+const spinnerSizeBySize: Record<NonNullable<VariantProps<typeof buttonVariants>['size']>, string> = {
+  xlarge: 'size-6',
+  large: 'size-5',
+  medium: 'size-5',
+  small: 'size-4',
+  xsmall: 'size-4',
+};
+
+// loading 렌더는 스피너+숨김 children 2개 노드를 만들어 Slot(단일 자식 요구)과
+// 양립할 수 없다 — 조합 자체를 타입에서 금지한다
 type ButtonProps = React.ComponentProps<'button'> &
-  VariantProps<typeof buttonVariants> & {
-    asChild?: boolean;
-    /** 로딩 중에는 클릭이 차단되고 너비를 유지한 채 스피너만 보인다 */
-    loading?: boolean;
-  };
+  VariantProps<typeof buttonVariants> &
+  (
+    | {
+        asChild?: false;
+        /** 로딩 중에는 클릭이 차단되고 너비를 유지한 채 스피너만 보인다 */
+        loading?: boolean;
+      }
+    | {
+        asChild: true;
+        loading?: never;
+      }
+  );
 
 function Button({
   className,
@@ -64,11 +83,8 @@ function Button({
       data-slot="button"
       data-variant={variant}
       data-size={size}
-      className={cn(
-        buttonVariants({ variant, size }),
-        isLoading && 'pointer-events-none border-transparent bg-muted text-fg-disabled',
-        className,
-      )}
+      data-loading={isLoading || undefined}
+      className={cn(buttonVariants({ variant, size }), className)}
       disabled={disabled || isLoading}
       aria-busy={isLoading || undefined}
       {...props}
@@ -76,7 +92,7 @@ function Button({
       {isLoading ? (
         <>
           <span className="absolute inset-0 inline-flex items-center justify-center">
-            <Spinner />
+            <Spinner className={spinnerSizeBySize[size ?? 'medium']} />
           </span>
           <span aria-hidden className="invisible inline-flex items-center gap-2">
             {children}

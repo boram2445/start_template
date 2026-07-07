@@ -16,7 +16,7 @@ const textButtonVariants = cva(
   {
     variants: {
       variant: {
-        primary: 'text-brand',
+        primary: 'text-primary',
         secondary: 'text-foreground',
         tertiary: 'text-fg-secondary',
       },

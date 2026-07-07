@@ -10,7 +10,7 @@ const meta: Meta<typeof Skeleton> = {
     docs: {
       description: {
         component:
-          '로딩 표준 스켈레톤 — 회색 베이스 + 웨이브 시머. 사각(radius 12) / 원형 / 카드(radius 16 + 헤어라인 + 그림자) 3개 variant.',
+          '로딩 표준 스켈레톤 — 사각 / 원형 / 카드 3개 variant.\n\n회색 베이스 + 웨이브 시머. 사각은 radius 12, 카드는 radius 16 + 헤어라인 + 그림자.',
       },
     },
   },

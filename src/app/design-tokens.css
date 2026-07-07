@@ -253,7 +253,7 @@
   /* Selection (checkbox/radio/select item) */
   --ds-select-checked-bg: var(--ds-bg-brand);
   --ds-select-checked-fg: var(--ds-fg-on-brand);
-  --ds-select-unchecked-border: var(--ds-line-strong);
+  --ds-select-unchecked-border: var(--ds-gray-500);
   --ds-select-item-bg: var(--ds-green-100);
   --ds-select-item-fg: var(--ds-green-800);
   --ds-select-item-border: var(--ds-bg-brand);
@@ -265,6 +265,19 @@
   /* Progress */
   --ds-progress-track: var(--ds-viz-empty);
   --ds-progress-fill: var(--ds-brand);
+}
+
+/* ============================================================
+   DESKTOP WEB (≥768px, md) — press-scale 완화
+   마우스는 커서 자체가 클릭 의도를 표시하므로 크기 변화까지 더하면
+   과잉 피드백으로 읽힌다(design-web.md). press-scale/press-scale-row
+   유틸은 이 변수만 참조하므로 컴포넌트별 수정 없이 여기서 한 번에 적용된다.
+   ============================================================ */
+@media (min-width: 768px) {
+  :root {
+    --ds-scale-press: 1;
+    --ds-scale-press-row: 1;
+  }
 }
 
 /* ============================================================
@@ -289,6 +302,9 @@
   --ds-line-default: oklch(1 0 0 / 0.1);
   --ds-line-strong: oklch(1 0 0 / 0.16);
   --ds-line-brand: var(--ds-green-400);
+
+  /* gray-500은 다크 배경에서 대비가 약해, line-strong보다 진한 반투명 흰색으로 대체 */
+  --ds-select-unchecked-border: oklch(1 0 0 / 0.24);
 
   --ds-select-item-bg: oklch(0.3 0.05 150);
   --ds-select-item-fg: var(--ds-green-300);

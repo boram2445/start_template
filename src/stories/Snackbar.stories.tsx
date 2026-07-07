@@ -11,7 +11,7 @@ const meta: Meta<typeof Snackbar> = {
     docs: {
       description: {
         component:
-          '하단 일시 토스트 — 어두운 둥근 컨테이너 + 흰 텍스트, 자동 소멸. 성공은 체크 아이콘이 붙는다. 트리거는 sonner의 toast를 감싼 snackbar() 헬퍼를 사용하고, 앱 적용 시 providers.tsx의 기본 Toaster를 이 컴포넌트로 교체한다.',
+          '하단 일시 토스트 — 트리거는 sonner의 toast를 감싼 snackbar() 헬퍼를 사용하고, 앱 적용 시 providers.tsx의 기본 Toaster를 이 컴포넌트로 교체한다.\n\n어두운 둥근 컨테이너 + 흰 텍스트, 자동 소멸. 성공은 체크 아이콘이 붙는다.',
       },
     },
   },

@@ -14,7 +14,7 @@ const meta: Meta<typeof Chip> = {
     docs: {
       description: {
         component:
-          '선택 가능한 pill 형태의 칩. 비선택 시 흰 배경 + 헤어라인 + 보조 텍스트, 선택 시 브랜드 tint 배경 + 브랜드 보더 + 강조 텍스트로 전환된다. 선택 상태는 aria-pressed로 노출된다.',
+          '선택 가능한 pill 형태의 칩 — 선택 상태는 aria-pressed로 노출된다.\n\n비선택 시 흰 배경 + 헤어라인 + 보조 텍스트, 선택 시 브랜드 tint 배경 + 브랜드 보더 + 강조 텍스트로 전환된다.',
       },
     },
   },
@@ -23,7 +23,7 @@ const meta: Meta<typeof Chip> = {
     size: {
       control: 'select',
       options: ['medium', 'small', 'xsmall'],
-      description: '칩 크기 (높이 36~40)',
+      description: '칩 크기 (높이 32~36)',
     },
     selected: {
       control: 'boolean',
@@ -36,6 +36,10 @@ const meta: Meta<typeof Chip> = {
     children: {
       control: 'text',
       description: '칩 내용',
+    },
+    asChild: {
+      control: false,
+      description: '링크 등 다른 요소로 렌더링 (radix Slot)',
     },
   },
 };
@@ -99,6 +103,20 @@ export const Interactive: Story = {
     await userEvent.click(chip);
     await expect(chip).toHaveAttribute('aria-pressed', 'false');
   },
+};
+
+export const AsLink: Story = {
+  // 필터 칩을 쿼리스트링 링크로 쓰는 웹 패턴 — asChild로 <a> 렌더
+  render: () => (
+    <div className="flex items-center gap-2">
+      <Chip asChild selected>
+        <a href="#all">전체</a>
+      </Chip>
+      <Chip asChild>
+        <a href="#running">러닝</a>
+      </Chip>
+    </div>
+  ),
 };
 
 export const AllVariants: Story = {

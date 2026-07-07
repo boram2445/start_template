@@ -10,7 +10,7 @@ const meta: Meta<typeof Tag> = {
     docs: {
       description: {
         component:
-          '비인터랙티브 분류 라벨 — 파스텔 분류색의 주 무대. accent 배경 + 동계열 진한 텍스트 조합이며, 기본은 브랜드 그린 tint. 클릭 대상이 아니므로 press 피드백이 없다.',
+          '비인터랙티브 분류 라벨 — 클릭 대상이 아니므로 press 피드백이 없다.\n\n파스텔 분류색의 주 무대. accent 배경 + 동계열 진한 텍스트 조합이며, 기본은 브랜드 그린 tint.',
       },
     },
   },

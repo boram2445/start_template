@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import { cva, type VariantProps } from 'class-variance-authority';
+import { Slot } from 'radix-ui';
 
 import { cn } from '@/lib/utils';
 
@@ -18,9 +19,9 @@ const chipVariants = cva(
   {
     variants: {
       size: {
-        medium: 'h-10 px-3 text-sm',
-        small: 'h-[38px] px-3 text-sm',
-        xsmall: 'h-9 px-2.5 text-xs',
+        medium: 'h-9 px-3 text-sm',
+        small: 'h-[34px] px-3 text-sm',
+        xsmall: 'h-8 px-2.5 text-xs',
       },
     },
     defaultVariants: {
@@ -33,12 +34,16 @@ type ChipProps = React.ComponentProps<'button'> &
   VariantProps<typeof chipVariants> & {
     /** 선택 상태 — aria-pressed로 노출된다 */
     selected?: boolean;
+    /** 링크 등 다른 요소로 렌더링할 때 사용 (radix Slot) */
+    asChild?: boolean;
   };
 
-function Chip({ className, size = 'medium', selected = false, ...props }: ChipProps) {
+function Chip({ className, size = 'medium', selected = false, asChild = false, ...props }: ChipProps) {
+  const Comp = asChild ? Slot.Root : 'button';
+
   return (
-    <button
-      type="button"
+    <Comp
+      type={asChild ? undefined : 'button'}
       data-slot="chip"
       data-size={size}
       aria-pressed={selected}

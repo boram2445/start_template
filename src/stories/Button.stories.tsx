@@ -1,16 +1,27 @@
+import type * as React from 'react';
+
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 
 import { Button } from '@/components/core/button/index';
 
-const meta: Meta<typeof Button> = {
+// ButtonProps는 asChild+loading 조합을 막는 판별 유니온이라 Storybook의
+// args 추론(교차 변환)에서 never로 접힌다 — 유니온을 편 느슨한 타입으로 다룬다
+type ButtonStoryProps = React.ComponentProps<'button'> & {
+  variant?: 'primary' | 'secondary' | 'tertiary' | 'outlined';
+  size?: 'xlarge' | 'large' | 'medium' | 'small' | 'xsmall';
+  loading?: boolean;
+  asChild?: boolean;
+};
+
+const meta: Meta<ButtonStoryProps> = {
   title: 'UI/Button',
-  component: Button,
+  component: Button as React.ComponentType<ButtonStoryProps>,
   parameters: {
     layout: 'centered',
     docs: {
       description: {
         component:
-          '디자인 킷의 주 행동 버튼. 4개 variant(primary/secondary/tertiary/outlined)와 5개 사이즈(xlarge/large/medium/small/xsmall, 56/48/40/34/32)를 제공하며, 사이즈에 따라 radius가 14/12/12/10/8로 함께 스케일한다. disabled는 불투명도 대신 색 교체, 화면당 primary는 하나만 둔다.',
+          '디자인 킷의 주 행동 버튼 — 화면당 primary는 하나만 둔다.\n\n4개 variant(primary/secondary/tertiary/outlined)와 5개 사이즈(xlarge/large/medium/small/xsmall, 56/48/40/34/32)를 제공하며, 사이즈에 따라 radius가 14/12/12/10/8로 함께 스케일한다. disabled는 불투명도 대신 색 교체.',
       },
     },
   },

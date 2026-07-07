@@ -14,7 +14,7 @@ const meta: Meta<typeof Switch> = {
     docs: {
       description: {
         component:
-          '토글 스위치. on 트랙은 브랜드 그린, off 트랙은 gray-300, knob은 흰색이다. label을 지정하면 라벨 클릭으로도 토글되는 행 레이아웃이 된다.',
+          '토글 스위치 — label을 지정하면 라벨 클릭으로도 토글되는 행 레이아웃이 된다.\n\non 트랙은 브랜드 그린, off 트랙은 gray-300, knob은 흰색이다.',
       },
     },
   },

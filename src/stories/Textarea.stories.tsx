@@ -12,12 +12,17 @@ const meta: Meta<typeof Textarea> = {
     docs: {
       description: {
         component:
-          '멀티라인 입력 필드. 최소 높이 64에서 내용에 따라 auto-grow하며, radius 14 + 회색 배경 + 헤어라인 보더. showCount와 maxLength를 함께 쓰면 "12/200" 형태의 글자수 카운터가 붙는다.',
+          '멀티라인 입력 필드 — showCount와 maxLength를 함께 쓰면 "12/200" 형태의 글자수 카운터가 붙는다.\n\nInput과 동형인 filled(회색 배경)/outlined(흰 배경 + 헤어라인)/underline(하단 보더만) 3개 variant. 최소 높이 64에서 내용에 따라 auto-grow하며, radius 14(underline은 0).',
       },
     },
   },
   tags: ['autodocs'],
   argTypes: {
+    variant: {
+      control: 'select',
+      options: ['filled', 'outlined', 'underline'],
+      description: '필드 표면 스타일',
+    },
     label: {
       control: 'text',
       description: '필드 위 라벨',
@@ -66,6 +71,22 @@ export const Default: Story = {
   },
 };
 
+export const Outlined: Story = {
+  args: {
+    label: '메모',
+    placeholder: '오늘의 기록을 남겨 보세요',
+    variant: 'outlined',
+  },
+};
+
+export const Underline: Story = {
+  args: {
+    label: '메모',
+    placeholder: '오늘의 기록을 남겨 보세요',
+    variant: 'underline',
+  },
+};
+
 export const WithCounter: Story = {
   args: {
     label: '소개',
@@ -104,7 +125,9 @@ export const AllVariants: Story = {
   },
   render: () => (
     <div className="flex w-80 flex-col gap-6">
-      <Textarea label="기본" placeholder="오늘의 기록을 남겨 보세요" />
+      <Textarea label="filled" placeholder="오늘의 기록을 남겨 보세요" />
+      <Textarea variant="outlined" label="outlined" placeholder="오늘의 기록을 남겨 보세요" />
+      <Textarea variant="underline" label="underline" placeholder="오늘의 기록을 남겨 보세요" />
       <Textarea label="카운터" placeholder="내 소개" showCount maxLength={200} />
       <Textarea label="헬퍼" placeholder="메모" helperText="최대 200자까지 저장돼요" />
       <Textarea label="에러" defaultValue="안" error="소개는 2자 이상이어야 해요" />

@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils';
 
 const inputVariants = cva(
   [
-    'h-12 w-full min-w-0 text-base transition-colors duration-100 ease-ds outline-none',
+    'w-full min-w-0 text-base transition-colors duration-100 ease-ds outline-none',
     'placeholder:text-fg-placeholder',
     'disabled:pointer-events-none disabled:bg-muted disabled:text-fg-disabled',
     'aria-invalid:border-destructive',
@@ -16,18 +16,25 @@ const inputVariants = cva(
       variant: {
         filled: 'rounded-md border border-transparent bg-muted px-4 focus:border-brand',
         outlined: 'rounded-md border border-line bg-card px-4 focus:border-brand',
-        // 하단 보더만 — 평소에는 투명, 포커스에만 드러난다 (design.md)
-        underline:
-          'rounded-none border-b border-transparent bg-transparent px-0 focus:border-brand',
+        // 하단 보더만 — 평소 회색 헤어라인, 포커스 시 브랜드색 (design.md)
+        underline: 'rounded-none border-b border-line bg-transparent px-0 focus:border-brand',
+      },
+      // 기본은 medium(40, 데스크톱 밀집 UI) — design-web.md 버튼 어휘와 일치.
+      // large(48)는 모바일·터치 화면에서 명시적으로 지정해 쓴다
+      size: {
+        large: 'h-12',
+        medium: 'h-10',
       },
     },
     defaultVariants: {
       variant: 'filled',
+      size: 'medium',
     },
   },
 );
 
-type InputProps = React.ComponentProps<'input'> &
+// HTML input의 size 속성(number)과 충돌하므로 Omit 후 variant로 재선언한다
+type InputProps = Omit<React.ComponentProps<'input'>, 'size'> &
   VariantProps<typeof inputVariants> & {
     /** 필드 위 라벨 */
     label?: string;
@@ -40,6 +47,7 @@ type InputProps = React.ComponentProps<'input'> &
 function Input({
   className,
   variant = 'filled',
+  size = 'medium',
   label,
   helperText,
   error,
@@ -54,7 +62,10 @@ function Input({
   return (
     <div data-slot="input-field" className="flex w-full flex-col gap-1.5">
       {label && (
-        <label htmlFor={inputId} className="text-base text-fg-secondary">
+        <label
+          htmlFor={inputId}
+          className={cn('text-fg-secondary', size === 'large' ? 'text-base' : 'text-sm')}
+        >
           {label}
         </label>
       )}
@@ -62,9 +73,10 @@ function Input({
         id={inputId}
         data-slot="input"
         data-variant={variant}
+        data-size={size}
         aria-invalid={error ? true : undefined}
         aria-describedby={descriptionId}
-        className={cn(inputVariants({ variant }), className)}
+        className={cn(inputVariants({ variant, size }), className)}
         {...props}
       />
       {description && (

@@ -1,3 +1,5 @@
+import type * as React from 'react';
+
 import { expect, userEvent, waitFor, within } from 'storybook/test';
 
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
@@ -15,7 +17,14 @@ import {
   ModalTrigger,
 } from '@/components/core/modal/index';
 
-const meta: Meta<typeof ModalContent> = {
+// 컴파운드 컴포넌트라 ModalTitle 등의 내용은 컴포넌트 props가 아니다 —
+// 컨트롤 패널에서 수정해볼 수 있도록 스토리 전용 args로 노출해 render에 배선한다
+type ModalStoryArgs = React.ComponentProps<typeof ModalContent> & {
+  title: string;
+  description: string;
+};
+
+const meta: Meta<ModalStoryArgs> = {
   title: 'UI/Modal',
   component: ModalContent,
   parameters: {
@@ -23,7 +32,7 @@ const meta: Meta<typeof ModalContent> = {
     docs: {
       description: {
         component:
-          '반응형 모달 — 데스크톱(≥768px)은 중앙 Dialog(radius 20 + 부양 그림자), 모바일(<768px)은 BottomSheet로 자동 전환된다. API는 하나이므로 사용처는 화면 폭을 신경 쓸 필요 없다. 데스크톱 너비는 ModalContent의 size(sm 384 / md 448 / lg 512)로 조절하며 기본은 sm이다.',
+          '반응형 모달 — 데스크톱(≥768px)은 중앙 Dialog, 모바일(<768px)은 BottomSheet로 자동 전환된다. API는 하나이므로 사용처는 화면 폭을 신경 쓸 필요 없다.\n\n데스크톱은 radius 20 + 부양 그림자, 너비는 ModalContent의 size(sm 384 / md 448 / lg 512)로 조절하며 기본은 sm이다.',
       },
     },
   },
@@ -42,6 +51,19 @@ const meta: Meta<typeof ModalContent> = {
       control: false,
       description: '모달 내용 (컴파운드 컴포넌트)',
     },
+    title: {
+      control: 'text',
+      description: '헤더 타이틀 — ModalTitle로 렌더 (스토리 전용 arg)',
+    },
+    description: {
+      control: 'text',
+      description: '타이틀 아래 설명 — ModalDescription으로 렌더 (스토리 전용 arg)',
+    },
+  },
+  args: {
+    size: 'sm',
+    title: '루틴을 삭제할까요?',
+    description: '삭제한 루틴은 되돌릴 수 없어요.',
   },
 };
 
@@ -49,18 +71,15 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  args: {
-    size: 'sm',
-  },
-  render: (args) => (
+  render: ({ title, description, ...args }) => (
     <Modal>
       <ModalTrigger asChild>
         <Button variant="outlined">모달 열기</Button>
       </ModalTrigger>
       <ModalContent {...args}>
         <ModalHeader>
-          <ModalTitle>루틴을 삭제할까요?</ModalTitle>
-          <ModalDescription>삭제한 루틴은 되돌릴 수 없어요.</ModalDescription>
+          <ModalTitle>{title}</ModalTitle>
+          <ModalDescription>{description}</ModalDescription>
         </ModalHeader>
         <ModalFooter>
           <ModalClose asChild>
@@ -75,7 +94,7 @@ export const Default: Story = {
       </ModalContent>
     </Modal>
   ),
-  play: async ({ canvasElement }) => {
+  play: async ({ canvasElement, args }) => {
     const canvas = within(canvasElement);
     const body = within(canvasElement.ownerDocument.body);
 
@@ -86,7 +105,7 @@ export const Default: Story = {
       },
       { timeout: 3000 },
     );
-    await expect(body.getByText('루틴을 삭제할까요?')).toBeInTheDocument();
+    await expect(body.getByText(args.title)).toBeInTheDocument();
 
     await userEvent.click(body.getByRole('button', { name: '다음에' }));
     await waitFor(
@@ -98,18 +117,30 @@ export const Default: Story = {
   },
 };
 
+export const Large: Story = {
+  args: {
+    size: 'lg',
+    showCloseButton: false,
+    title: '기록을 모두 삭제할까요?',
+    description: '30일이 지난 기록까지 모두 삭제돼요.',
+  },
+  // Default와 같은 확인형 레이아웃 — lg 너비 + 닫기 버튼 숨김 조합 시연
+  render: Default.render,
+};
+
 export const WithBody: Story = {
   args: {
     size: 'md',
+    title: '이용약관',
   },
-  render: (args) => (
+  render: ({ title, description: _description, ...args }) => (
     <Modal>
       <ModalTrigger asChild>
         <Button variant="outlined">약관 보기</Button>
       </ModalTrigger>
       <ModalContent {...args}>
         <ModalHeader>
-          <ModalTitle>이용약관</ModalTitle>
+          <ModalTitle>{title}</ModalTitle>
         </ModalHeader>
         <ModalBody>
           <p className="text-base text-fg-secondary">

@@ -14,7 +14,7 @@ const meta: Meta<typeof TopAppBar> = {
     docs: {
       description: {
         component:
-          '최소 52 높이의 상단 앱 바 — 흰 배경 위 BackButton + Title + 액션 슬롯(최대 3) 구조. 좁은 화면에서 타이틀이 말줄임되어 액션 넘침을 방지한다.',
+          '상단 앱 바 — BackButton + Title + 액션 슬롯(최대 3) 구조. 좁은 화면에서 타이틀이 말줄임되어 액션 넘침을 방지한다.\n\n최소 높이 52, 흰 배경.',
       },
     },
   },
@@ -22,7 +22,7 @@ const meta: Meta<typeof TopAppBar> = {
   argTypes: {
     title: {
       control: 'text',
-      description: '중앙 타이틀',
+      description: '타이틀 — 뒤로가기 버튼 오른쪽에 좌측 정렬, 좁으면 말줄임',
     },
     onBack: {
       control: false,

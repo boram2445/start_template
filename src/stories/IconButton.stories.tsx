@@ -12,7 +12,7 @@ const meta: Meta<typeof IconButton> = {
     docs: {
       description: {
         component:
-          '완전 원형 아이콘 버튼. 5개 사이즈(xsmall ~28 → xlarge ~46)를 제공하며 press 리플이 원형에 클리핑된다. 아이콘 전용이므로 aria-label이 필수다 (라인/필 아이콘만, 이모지 금지).',
+          '완전 원형 아이콘 버튼 — 아이콘 전용이므로 aria-label이 필수다 (라인/필 아이콘만, 이모지 금지).\n\n5개 사이즈(xsmall ~28 → xlarge ~46)를 제공하며 press 리플이 원형에 클리핑된다.',
       },
     },
   },

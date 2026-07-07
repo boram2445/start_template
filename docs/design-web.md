@@ -24,7 +24,24 @@ Tailwind 기본 스케일을 그대로 쓴다. **모바일 우선**으로 작성
 
 ## core/ ↔ ui/ 조합 규칙
 
-**모바일·공용 화면 어휘는 `core/`, 데스크톱 전용 패턴은 `ui/`(shadcn)를 그대로 쓴다.** ui/ 38종은 토큰 리매핑으로 이미 킷 색·radius를 입고 있다.
+**모바일·공용 화면 어휘는 `core/`, 데스크톱 전용 패턴은 `ui/`(shadcn)를 그대로 쓴다.** ui/는 토큰 리매핑으로 이미 킷 색·radius를 입고 있다.
+
+### core가 ui를 감싸는 기준
+
+- **radix 등 동작 프리미티브가 있으면 감싼다** — 상태·포커스·키보드·`data-[state]` 배선을 공짜로 얻는다 (checkbox, radio, switch, tabs, modal↔dialog, bottom-sheet↔sheet, snackbar↔sonner).
+- **스타일뿐인 껍데기면 독자 구현한다** — 감싸도 클래스 문자열 하나를 대부분 덮어쓰게 되므로 재사용분이 없다 (button, input, textarea, card, skeleton 등).
+- **`ui/` 직접 수정은 금지** — ui/끼리 서로 import하므로(예: calendar·pagination이 buttonVariants 사용) 수정이 연쇄되고, shadcn 업데이트 경로도 잃는다. 색처럼 CSS 변수로 흐르는 값은 `globals.css` 토큰 리매핑 층에서 바꾼다.
+
+### ui/ 직접 import 제한 (lint 강제)
+
+core 대체물이 있는 ui 파일(button·input·skeleton + 래핑된 7종)은 `ui/`·`core/` 내부에서만 import할 수 있다 — `eslint.config.mjs`의 `no-restricted-imports`가 차단하고, 앱 코드는 항상 `core/`를 쓴다.
+
+역할 없는 ui는 정리했다. 남은 21종은 세 그룹뿐이다:
+- **core가 감싸는 8종**: checkbox, dialog, radio-group, sheet, sonner, spinner, switch, tabs
+- **데스크톱 툴박스 8종**(위 표의 역할): calendar, dropdown-menu, navigation-menu, pagination, popover, select, sidebar, table
+- **그 내부 부품 5종**: button, input, separator, skeleton, tooltip
+
+삭제된 컴포넌트(card·badge·toggle·textarea·label·accordion·alert·avatar·breadcrumb·carousel·empty·field·input-group·progress·resizable·scroll-area)가 필요해지면 `npx shadcn add`로 재설치한다.
 
 | 상황 | 사용 |
 |---|---|
@@ -48,7 +65,7 @@ Tailwind 기본 스케일을 그대로 쓴다. **모바일 우선**으로 작성
 
 - 모든 버튼은 전역 `cursor: pointer` (globals.css base — Tailwind v4는 리셋하지 않음)
 - hover는 `press-scale`/`press-scale-row` 유틸의 4% 오버레이가 공통 언어. 개별 컴포넌트에 hover 색을 더할 때도 킷의 절제 기조(무채색 tint 우선)를 유지한다
-- `press-scale`(0.92 축소)은 데스크톱에서도 유지 — 킷의 아이덴티티다. 부담스러우면 프로젝트에서 `md:active:scale-100`으로 완화 가능
+- `press-scale`/`press-scale-row`의 축소(0.92/0.96)는 데스크톱(≥768px, md)에서 1로 완화된다 — `design-tokens.css`의 `@media (min-width: 768px) { :root { --ds-scale-press: 1; --ds-scale-press-row: 1; } }`. 마우스는 커서 자체가 클릭 의도를 표시하므로 크기 변화까지 더하면 과잉 피드백으로 읽히기 때문. hover/press 색상 오버레이는 두 플랫폼 모두 유지되며, 변수 하나만 바뀌므로 컴포넌트별 수정은 필요 없다
 
 ## SSR 주의
 

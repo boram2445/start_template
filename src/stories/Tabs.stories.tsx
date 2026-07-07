@@ -8,11 +8,12 @@ const meta: Meta<typeof Tabs> = {
   title: 'UI/Tabs',
   component: Tabs,
   parameters: {
-    layout: 'padded',
+    // 전폭 컴포넌트 — Storybook 캔버스 자체 여백을 없애 데코레이터 프레임만 남긴다 (SiteHeader와 동일 관례)
+    layout: 'fullscreen',
     docs: {
       description: {
         component:
-          '킷 규격 탭 — 1px 하단 보더 + 회색 워시 바 + px 16. active 탭은 진한 텍스트 + 2px 하단 인디케이터, inactive는 보조 텍스트 색이다.',
+          '섹션 전환용 킷 규격 탭.\n\n1px 하단 보더 + 회색 워시 바 + px 16. active 탭은 진한 텍스트 + 2px 하단 인디케이터, inactive는 보조 텍스트 색이다.',
       },
     },
   },

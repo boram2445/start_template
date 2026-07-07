@@ -10,7 +10,7 @@ const meta: Meta<typeof TextButton> = {
     docs: {
       description: {
         component:
-          '배경 없는 텍스트 버튼. radius 4 고정, variant로 텍스트 색이 결정되며(primary 브랜드 / secondary 본문 / tertiary 보조) 옵션으로 underline을 지원한다.',
+          '배경 없는 텍스트 버튼 — 옵션으로 underline을 지원한다.\n\nradius 4 고정, variant로 텍스트 색이 결정된다(primary 브랜드 / secondary 본문 / tertiary 보조).',
       },
     },
   },

@@ -20,8 +20,8 @@ function RadioGroup({ className, boxed = false, ...props }: RadioGroupProps) {
 }
 
 type RadioProps = React.ComponentProps<typeof RadioGroupItem> & {
-  /** 컨트롤 오른쪽 라벨 — 높이 48 행 레이아웃, 라벨 클릭으로도 선택된다 */
-  label: string;
+  /** 컨트롤 오른쪽 라벨 — 지정 시 높이 48 행 레이아웃이 되고 라벨 클릭으로도 선택된다 */
+  label?: React.ReactNode;
 };
 
 /**
@@ -32,23 +32,36 @@ function Radio({ className, label, id, ...props }: RadioProps) {
   const generatedId = React.useId();
   const radioId = id ?? generatedId;
 
+  const control = (
+    <RadioGroupItem
+      id={radioId}
+      className={cn(
+        'size-5 border-2 border-[var(--ds-select-unchecked-border)] shadow-none',
+        'bg-card transition-colors duration-100 ease-ds dark:bg-card',
+        'data-[state=checked]:border-primary',
+        'disabled:cursor-default disabled:opacity-100 disabled:border-[var(--ds-gray-300)]',
+        'disabled:[&_svg]:fill-[var(--ds-gray-300)] disabled:[&_svg]:text-[var(--ds-gray-300)]',
+        className,
+      )}
+      {...props}
+    />
+  );
+
+  if (!label) {
+    // 시각적으로는 20px 박스를 유지하되, 보이지 않는 패딩으로 클릭 영역만 44px 확보 (checkbox와 동일)
+    return (
+      <span data-slot="radio-hitbox" className="inline-flex items-center justify-center p-3">
+        {control}
+      </span>
+    );
+  }
+
   return (
     <div
       data-slot="radio-row"
       className="press-scale-row flex h-12 w-full items-center gap-2 rounded-sm px-4 py-3"
     >
-      <RadioGroupItem
-        id={radioId}
-        className={cn(
-          'size-5 border-2 border-[var(--ds-select-unchecked-border)] shadow-none',
-          'bg-card transition-colors duration-100 ease-ds dark:bg-card',
-          'data-[state=checked]:border-primary',
-          'disabled:cursor-default disabled:opacity-100 disabled:border-[var(--ds-gray-300)]',
-          'disabled:[&_svg]:fill-[var(--ds-gray-300)] disabled:[&_svg]:text-[var(--ds-gray-300)]',
-          className,
-        )}
-        {...props}
-      />
+      {control}
       <label
         htmlFor={radioId}
         className={cn('flex-1 text-base', props.disabled ? 'text-fg-disabled' : 'text-foreground')}

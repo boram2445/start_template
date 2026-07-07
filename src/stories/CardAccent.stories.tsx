@@ -10,7 +10,7 @@ const meta: Meta<typeof CardAccent> = {
     docs: {
       description: {
         component:
-          '분류용 파스텔 카드 — radius 22, accent 배경 + 기본 텍스트. 비인터랙티브 표면이며 진입 액션은 별도 버튼이나 전체 영역 탭으로 처리한다. 파스텔이 허용되는 두 표면(Tag와 CardAccent) 중 하나.',
+          '분류용 파스텔 카드 — 비인터랙티브 표면이며 진입 액션은 별도 버튼이나 전체 영역 탭으로 처리한다. 파스텔이 허용되는 두 표면(Tag와 CardAccent) 중 하나.\n\nradius 22, accent 배경 + 기본 텍스트.',
       },
     },
   },
