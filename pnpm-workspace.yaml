@@ -1,8 +1,8 @@
+# 빌드 스크립트가 있는 의존성별 실행 허용 여부 (pnpm은 미결정 시 install을 에러냄).
+# 바이너리는 optionalDependencies로 해결되므로 postinstall 없이도 동작한다 —
+# 빌드 핵심인 esbuild만 허용하고 나머지는 스킵한다.
 allowBuilds:
-  esbuild: set this to true or false
-  msw: set this to true or false
-  sharp: set this to true or false
-  unrs-resolver: set this to true or false
-ignoredBuiltDependencies:
-  - sharp
-  - unrs-resolver
+  esbuild: true
+  msw: false
+  sharp: false
+  unrs-resolver: false
