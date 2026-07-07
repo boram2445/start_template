@@ -5,8 +5,8 @@ Next.js 16 App Router 기반 **프로젝트 시작 템플릿**. 새 프로젝트
 ## 스택
 
 - **Next.js 16.2.4** (App Router, Turbopack) + **React 19.2.3** + **TypeScript 5** (strict)
-- **Tailwind CSS v4** (config 파일 없이 `src/app/globals.css`의 `@theme` + CSS 변수로 토큰 관리)
-- **shadcn/ui** — new-york 스타일, neutral base, 37개 컴포넌트 소스 설치 완료
+- **Tailwind CSS v4** (config 파일 없이 토큰 원천 `src/app/design-tokens.css` + `globals.css`의 `@theme inline` 매핑, 다크모드는 `.dark` 클래스)
+- **shadcn/ui** — new-york 스타일, neutral base, 21개 컴포넌트 소스 설치 완료
 - **TanStack Query / Table**, **Zustand**, **next-themes**, **sonner**, **lucide-react**
 - **Storybook 10** + **Vitest 4** (Playwright Chromium browser mode)
 - **ESLint 9** flat config + **Prettier**
@@ -16,7 +16,6 @@ Next.js 16 App Router 기반 **프로젝트 시작 템플릿**. 새 프로젝트
 
 ```bash
 pnpm install
-cp .env.example .env.local   # 필요 시 값 채우기
 pnpm dev                     # http://localhost:3000
 ```
 
@@ -34,24 +33,25 @@ npx tsc --noEmit      # 타입 검사
 
 ```
 src/
-├── app/                # Next App Router (RSC 기본)
-│   ├── globals.css     # Tailwind v4 + 디자인 토큰 원천
-│   ├── providers.tsx   # Theme / QueryClient / Toaster
+├── app/                    # Next App Router (RSC 기본)
+│   ├── design-tokens.css   # 디자인 토큰 원천 (Primitive → Semantic → Component)
+│   ├── globals.css         # Tailwind v4 + design-tokens.css 매핑
+│   ├── providers.tsx       # Theme / QueryClient / Toaster
 │   └── {error,loading,not-found,global-error}.tsx
 ├── components/
-│   ├── core/           # 프로젝트 도메인 컴포넌트 (비어 있음 — 여기서 시작)
-│   └── ui/             # shadcn 컴포넌트 (직접 수정 금지)
+│   ├── core/               # 공통 컴포넌트 (21개 — 여기서 시작)
+│   └── ui/                 # shadcn 컴포넌트 (직접 수정 금지)
 ├── hooks/
+├── network/                # fetch 래퍼: base·client(clientFetch)·server(publicFetch)
 └── lib/
-    ├── axios.ts        # api 인스턴스 (NEXT_PUBLIC_API_BASE_URL)
-    └── utils.ts        # cn() 헬퍼
+    └── utils.ts            # cn() 헬퍼
 ```
 
 ## 포함된 Claude Code 자산
 
 `.claude/` 에 프로젝트 컨벤션을 자동화하는 스킬/에이전트가 세팅돼 있다.
 
-- **skill `/register-api-hook`** — 백엔드 스펙을 받아 axios 함수 + React Query 훅 생성
+- **skill `/register-api-hook`** — 백엔드 스펙을 받아 `src/network/` fetch 래퍼(`clientFetch`/`publicFetch`) 함수 + React Query 훅 생성
 - **skill `/zustand-context-store`** — 서브트리 스코프 Zustand + Context 스토어 생성
 - **skill `/generate-story`** — 컴포넌트 분석 후 Storybook 스토리 자동 생성
 - **agent `frontend-code-reviewer`** — 변경된 코드에 대한 컨벤션 체크 리뷰

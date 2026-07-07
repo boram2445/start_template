@@ -65,7 +65,7 @@ Claude는 **구조·스캐폴드·가이드만 제공**하고, 핵심 자리에 
 
 ## 스택 gotcha
 
-- **Tailwind v4** — `tailwind.config.*` 없음. 토큰은 `globals.css` `@theme inline`. 하드코딩 HEX 금지.
+- **Tailwind v4** — `tailwind.config.*` 없음. 토큰 원천은 `src/app/design-tokens.css`(Primitive → Semantic → Component 3-tier, oklch). `globals.css` `@theme inline`은 이를 Tailwind 유틸로 매핑하는 레이어일 뿐 — 여기서 직접 값 추가하지 않는다. 다크모드는 `prefers-color-scheme` 아닌 `.dark` 클래스(next-themes `attribute="class"`). 하드코딩 HEX 금지. 원본 스펙: `docs/design.md`, `docs/design-tokens-kit.md`, `docs/design-web.md`, `docs/core-web-audit.md`.
 - **shadcn/ui** — `src/components/ui/` **직접 수정 금지**. lint/type 보정만 예외.
 - **network 레이어** — `src/network/` 3분할. 클라이언트·훅 → `clientFetch`, Server Component → `publicFetch`. 직접 `fetch()` 호출 금지.
 - **인증 없음** — 첫 사용 시 프로젝트에 맞게 추가.
@@ -73,6 +73,8 @@ Claude는 **구조·스캐폴드·가이드만 제공**하고, 핵심 자리에 
 ---
 
 ## 디렉터리 구조
+
+아래 트리는 목표 컨벤션 — `api/`·`features/`·`utils/`·`stores/`·`common/`·`lib/types/` 등은 아직 없을 수 있으며 필요 시 생성한다.
 
 ```
 src/
@@ -156,7 +158,7 @@ src/
 
 ## 컨벤션
 
-- **파일/폴더명**: kebab-case. 컴포넌트 폴더는 `index.tsx` barrel, import 시 `/index` suffix 명시.
+- **파일/폴더명**: kebab-case. 컴포넌트 폴더는 `index.tsx` barrel, import 시 `/index` suffix 명시. 예외: 스토리 파일은 `src/stories/`에 PascalCase(`Button.stories.tsx`) — shadcn/Storybook 관례.
 - **Export**: 훅/함수는 named export. default export는 Next 페이지/레이아웃 등 프레임워크 요구 시만.
 - **타입**: Props·상태 타입은 명시적으로 정의.
 - **import 순서**: React → 3rd-party → `@/*` → 상대경로.
